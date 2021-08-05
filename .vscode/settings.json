@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "mbport.h": "c",
+        "port.h": "c"
+    }
+}
