@@ -134,7 +134,7 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4099</DriverSelection>
+            <DriverSelection>4100</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>Segger\JL2CM3.dll</Flash2>
@@ -431,6 +431,11 @@
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\sys\sys.c</FilePath>
             </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\usart\usart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -494,8 +499,23 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeModbusSlave</GroupName>
+          <GroupName>New Group</GroupName>
           <Files>
+            <File>
+              <FileName>portevent.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeModbus\port\portevent.c</FilePath>
+            </File>
+            <File>
+              <FileName>portserial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeModbus\port\portserial.c</FilePath>
+            </File>
+            <File>
+              <FileName>porttimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeModbus\port\porttimer.c</FilePath>
+            </File>
             <File>
               <FileName>mb.c</FileName>
               <FileType>1</FileType>
@@ -517,11 +537,6 @@
               <FilePath>..\FreeModbus\modbus\functions\mbfunccoils.c</FilePath>
             </File>
             <File>
-              <FileName>mbfunccoils_m.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\modbus\functions\mbfunccoils_m.c</FilePath>
-            </File>
-            <File>
               <FileName>mbfuncdiag.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FreeModbus\modbus\functions\mbfuncdiag.c</FilePath>
@@ -532,29 +547,14 @@
               <FilePath>..\FreeModbus\modbus\functions\mbfuncdisc.c</FilePath>
             </File>
             <File>
-              <FileName>mbfuncdisc_m.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\modbus\functions\mbfuncdisc_m.c</FilePath>
-            </File>
-            <File>
               <FileName>mbfuncholding.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FreeModbus\modbus\functions\mbfuncholding.c</FilePath>
             </File>
             <File>
-              <FileName>mbfuncholding_m.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\modbus\functions\mbfuncholding_m.c</FilePath>
-            </File>
-            <File>
               <FileName>mbfuncinput.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FreeModbus\modbus\functions\mbfuncinput.c</FilePath>
-            </File>
-            <File>
-              <FileName>mbfuncinput_m.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\modbus\functions\mbfuncinput_m.c</FilePath>
             </File>
             <File>
               <FileName>mbfuncother.c</FileName>
@@ -570,21 +570,6 @@
               <FileName>mbascii.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\FreeModbus\modbus\ascii\mbascii.c</FilePath>
-            </File>
-            <File>
-              <FileName>portevent.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\port\portevent.c</FilePath>
-            </File>
-            <File>
-              <FileName>portserial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\port\portserial.c</FilePath>
-            </File>
-            <File>
-              <FileName>porttimer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeModbus\port\porttimer.c</FilePath>
             </File>
           </Files>
         </Group>

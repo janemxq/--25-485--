@@ -21,38 +21,42 @@ typedef int32_t LONG;
 //输入寄存器起始地址
 #define REG_INPUT_START       0x0000
 //输入寄存器数量
-#define REG_INPUT_NREGS       16
+#define REG_INPUT_NREGS       1
 //保持寄存器起始地址
 #define REG_HOLDING_START     0x0000
 //保持寄存器数量
-#define REG_HOLDING_NREGS     16
+#define REG_HOLDING_NREGS     1
 
 //线圈起始地址
 #define REG_COILS_START       0x0000
 //线圈数量
-#define REG_COILS_SIZE        16
+#define REG_COILS_SIZE        1
 
 //开关寄存器起始地址
 #define REG_DISCRETE_START    0x0000
 //开关寄存器数量
-#define REG_DISCRETE_SIZE     16
+#define REG_DISCRETE_SIZE     1
 
 
 /* Private variables ---------------------------------------------------------*/
 //输入寄存器内容
-uint16_t usRegInputBuf[REG_INPUT_NREGS] = {0x0000,0x0001,0x0002,0x0003,0x0004,0x0005,0x0006,0x0007,0x0008,0x0009,0x000A,0x000B,0x000C,0x000D,0x000E,0x000F};
+uint16_t usRegInputBuf[REG_INPUT_NREGS] = {0x0000};
+// uint16_t usRegInputBuf[REG_INPUT_NREGS] = {0x0000,0x0001,0x0002,0x0003,0x0004,0x0005,0x0006,0x0007,0x0008,0x0009,0x000A,0x000B,0x000C,0x000D,0x000E,0x000F};
 //寄存器起始地址
 uint16_t usRegInputStart = REG_INPUT_START;
 
 //保持寄存器内容
-uint16_t usRegHoldingBuf[REG_HOLDING_NREGS] = {0x0000,0x0001,0x0002,0x0003,0x0004,0x0005,0x0006,0x0007,0x0008,0x0009,0x000A,0x000B,0x000C,0x000D,0x000E,0x000F};
+// uint16_t usRegHoldingBuf[REG_HOLDING_NREGS] = {0x0000,0x0001,0x0002,0x0003,0x0004,0x0005,0x0006,0x0007,0x0008,0x0009,0x000A,0x000B,0x000C,0x000D,0x000E,0x000F};
+uint16_t usRegHoldingBuf[REG_HOLDING_NREGS] = {0x0000};
 //保持寄存器起始地址
 uint16_t usRegHoldingStart = REG_HOLDING_START;
 
 //线圈状态
-uint8_t ucRegCoilsBuf[REG_COILS_SIZE / 8] = {0x00,0x00};
+// uint8_t ucRegCoilsBuf[REG_COILS_SIZE / 8] = {0x00,0x00};
+uint8_t ucRegCoilsBuf[1] = {0x00};
 //开关输入状态
-uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
+// uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
+uint8_t ucRegDiscreteBuf[1] = {0x00};
 /************************************************
  ALIENTEK战舰STM32开发板实验25
  485通信实验 
@@ -74,10 +78,16 @@ uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
 	 
 	 
 	delay_init();	    	 //延时函数初始化	  
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置中断优先级分组为组2：2位抢占优先级，2位响应优先级
-	//uart_init(115200);	 	//串口初始化为115200
+	// NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置中断优先级分组为组2：2位抢占优先级，2位响应优先级
+	uart_init(115200);	 	//串口初始化为115200
+  //可以试试是否还卡死，printf必须在串口初始化之后调用
+  eMBInit(MB_RTU, 0x01, 0x02, 9600, MB_PAR_NONE); //初始化 RTU模式 从机地址为1 USART2 9600 无校验  
 	LED_Init();		  		//初始化与LED连接的硬件接口
+	 LED0=!LED0;
+    delay_ms(1000);
+    LED0=!LED0;
 	LCD_Init();			   	//初始化LCD 	
+	  
 	KEY_Init();				//按键初始化		 	 
 	// RS485_Init(9600);	//初始化RS485
  	POINT_COLOR=RED;//设置字体为红色 
@@ -92,20 +102,13 @@ uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
 	LCD_ShowString(30,170,200,16,16,"Send Data:");		//提示发送的数据	
 	LCD_ShowString(30,210,200,16,16,"Receive Data:");	//提示接收到的数据		
  			
-/**
-  * @brief  串口初始化
-  * @param  从站地址：0x01 
-  *         波特率：  9600
-  *         校验位：	MB_PAR_NONE      （MB_PAR_NONE/MB_PAR_ODD/MB_PAR_EVEN） 			
-  * @retval None
-  */
-  eMBInit(MB_RTU, 0x01, 0x02, 9600, MB_PAR_NONE); //初始化 RTU模式 从机地址为1 USART2 9600 无校验         
+       
   eMBEnable(); //启动FreeModbus 
   while(1)
 	{ 
 		eMBPoll();
     delay_ms(100);
- //   LED0=!LED0;
+  //  LED0=!LED0;
 //		usRegHoldingBuf[REG_HOLDING_START]++;//对Poll循环计数
 	}	
 	// while(1)
@@ -137,6 +140,10 @@ uint8_t ucRegDiscreteBuf[REG_DISCRETE_SIZE / 8] = {0x00,0x00};
 	// 	}		   
 	// } 
 }
+ _ttywrch(int ch)
+    {
+        ch = ch;
+    }
 /**
   * @brief  输入寄存器处理函数，输入寄存器可读，但不可写。
   * @param  pucRegBuffer  返回数据指针
@@ -246,7 +253,8 @@ eMBRegHoldingCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNRegs,
   *         usNRegs       寄存器长度
   *         eMode         操作方式，读或者写
   * @retval eStatus       寄存器状态
-  */
+  *  
+  *  */
 eMBErrorCode
 eMBRegCoilsCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNCoils,
                eMBRegisterMode eMode )
@@ -329,5 +337,6 @@ eMBRegDiscreteCB( UCHAR * pucRegBuffer, USHORT usAddress, USHORT usNDiscrete )
   }
   return eStatus;
 }
+
 
 
